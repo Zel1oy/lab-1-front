@@ -1,103 +1,179 @@
-/* Загальні стилі для тіла документа */
+/* --- Загальні стилі та змінні --- */
+:root {
+  --primary-color: #2c3e50;         /* HEX */
+  --accent-color: rgb(230, 126, 34); /* RGB */
+  --border-color-yellow: darkgoldenrod; /* Name */
+  --link-active-color: darkgreen;
+}
+
 body {
   font-family: Arial, sans-serif;
   margin: 0;
+  padding-top: 100px; /* Запас для позиціонованого хедера */
   background-color: #f4f4f4;
   color: #333;
 }
 
-/* Стилі для хедера */
+main {
+  max-width: 1200px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background-color: white;
+  position: relative; /* Одне зі значень position */
+}
+
+/* --- Демонстрація селекторів та комбінаторів (Вимога 3) --- */
+/* 1. Селектор ID */
+#main-title { font-family: 'Georgia', serif; }
+/* 2. Селектор атрибута */
+a[href="services.html"] { text-decoration: underline; }
+/* 3. Селектор атрибута (містить значення) */
+img[alt*="Шиномонтаж"] { border-radius: 10px; }
+/* 4. Комбінатор нащадків ('пробіл') */
+.logo h1 { margin: 0; }
+/* 5. Комбінатор дочірніх елементів ('>') */
+.user-actions > button { border-radius: 5px; }
+/* 6. Сусідній комбінатор ('+') */
+h3 + ol { margin-top: 0; }
+/* Також використовуються селектори класів (.site-header), елементів (body) та псевдо-класи (:hover) */
+
+
+/* --- Головна сторінка (Вимоги 1, 4) --- */
+
+/* Вимога 1.1: Абсолютне позиціонування хедера */
+.home-page .site-header {
+  position: absolute; /* Значення 1 */
+  top: 0;
+  left: 0;
+  width: 100%;
+  box-sizing: border-box;
+  z-index: 10;
+}
+
+/* Вимога 1.2: Блок без зовнішніх, але з внутрішніми відступами */
+.about-us {
+  margin: 0;
+  padding: 2rem;
+  float: left; /* Одне зі значень display/float */
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Вимога 1.3: Емодзі (реалізовано в HTML) */
+
+/* Вимога 1.4: Зміщення таблиці при наведенні */
+.services-overview {
+  clear: both; /* Очищення float */
+  transition: transform 0.4s ease-in-out; /* 2D трансформація */
+}
+.services-overview:hover {
+  transform: translateY(2vh);
+}
+
+/* Вимога 1.5: Збільшення тексту в футері з затримкою */
+.footer-contacts p {
+  /* Перехід між 3 властивостями */
+  transition: transform 0.5s ease 2s, color 0.5s ease 2s, font-weight 0.5s ease 2s;
+}
+.footer-contacts:hover p {
+  transform: scale(1.2); /* 2D трансформація */
+  color: var(--accent-color);
+  font-weight: bold;
+}
+
+/* Додатково: смуга прокручування для текстового блоку */
+.scrollable-content {
+  max-height: 100px;
+  overflow-y: auto;
+  border: 1px dashed #ccc;
+  padding: 10px;
+  margin-bottom: 1rem;
+}
+
+
+/* --- Сторінка "Каталог" (Вимоги 2, 6) --- */
+
+/* Використання Grid для адаптивності */
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+}
+
+/* Вимога 2.1: Фіксований хедер */
+.catalog-page .site-header {
+  position: fixed; /* Значення 2 */
+  top: 0;
+  left: 0;
+  width: 100%;
+  box-sizing: border-box;
+  z-index: 10;
+  background-color: #2c3e50;
+}
+
+/* Вимога 2.2: Рамка для картки товару */
+.service-card {
+  border-color: var(--border-color-yellow);
+  border-style: dotted solid; /* верхня - крапкова, бічні та нижня - суцільні */
+  border-width: 2px medium; /* верхня - тонка, нижня - середня */
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+/* Вимога 2.3: Стилізація тексту (замість "тип тканини") */
+.highlight-spec {
+  font-weight: 900;     /* Більша вага */
+  line-height: 1.5;     /* Висота гліфів */
+  font-style: italic;   /* Похилий */
+  color: #0056b3;
+}
+
+/* Вимога 2.4: Анімація фото до чорно-білого при фокусі/наведенні */
+.service-card img {
+  width: 100%;
+  height: auto;
+  transition: filter 0.5s ease; /* Анімація */
+}
+.service-card img:hover,
+.service-card img:focus {
+  filter: grayscale(100%);
+}
+
+/* Вимога 2.5: Колір посилання в момент кліку */
+.back-to-home:active {
+  color: var(--link-active-color);
+}
+
+
+/* --- Базові стилі, які були у вас --- */
 .site-header {
-  display: flex;
+  display: flex; /* Використання display */
   justify-content: space-between;
   align-items: center;
   padding: 1rem 2rem;
   background-color: #2c3e50;
   color: white;
 }
-.logo {
-  display: flex;
-  align-items: center;
-  text-decoration: none;
-  color: white;
-}
+.logo { display: flex; align-items: center; text-decoration: none; color: white; }
 .logo img { height: 50px; margin-right: 15px; }
 .main-nav a { color: white; text-decoration: none; margin: 0 15px; }
 .user-actions button {
-  background-color: #e67e22;
+  background-color: var(--accent-color);
   color: white;
   border: none;
   padding: 10px 15px;
   cursor: pointer;
   margin-left: 10px;
 }
-
-/* Основний контент */
-main {
-  max-width: 1200px;
-  margin: 2rem auto;
-  padding: 2rem;
-  background-color: white;
-}
-
-/* Таблиця на головній */
-.services-table {
-  width: 100%;
-  border-collapse: collapse;
+.services-table { width: 100%; border-collapse: collapse; margin-top: 2rem; }
+.services-table th, .services-table td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+.services-table th { background-color: #3498db; color: white; }
+.service-card h3, .service-card ul { padding: 0 1rem 1rem; }
+.back-to-home { display: inline-block; margin-top: 2rem; }
+.site-footer {
+  position: static; /* Значення 3 */
+  text-align: center;
+  padding: 1rem;
+  background: #333;
+  color: white;
   margin-top: 2rem;
 }
-.services-table th, .services-table td {
-  border: 1px solid #ddd;
-  padding: 8px;
-  text-align: left;
-}
-.services-table th {
-  background-color: #3498db;
-  color: white;
-}
-
-/* Каталог сервісів */
-.services-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 2rem;
-}
-.service-card {
-  border: 1px solid #ddd;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-}
-.service-card img {
-  width: 100%;
-  height: auto;
-}
-.service-card h3, .service-card ul {
-  padding: 0 1rem 1rem;
-}
-.back-to-home { display: inline-block; margin-top: 2rem; }
-
-/* Форма зворотнього зв'язку */
-.contact-form .form-group { margin-bottom: 1.5rem; }
-.contact-form label { display: block; margin-bottom: 5px; }
-.contact-form input[type="text"],
-.contact-form input[type="email"],
-.contact-form input[type="number"],
-.contact-form select,
-.contact-form textarea {
-  width: 100%;
-  padding: 10px;
-  border: 1px solid #ccc;
-  box-sizing: border-box; /* Важлива властивість! */
-}
-.contact-form textarea {
-  height: 150px;
-  max-width: 100%; /* Обмеження по ширині */
-  max-height: 200px; /* Обмеження по висоті */
-  resize: vertical; /* Дозволяє змінювати висоту, але не ширину */
-}
-.personal-info {
-  border: 1px solid #ccc;
-  padding: 1rem;
-}
-.personal-info legend { padding: 0 0.5rem; }
-.consent-group { display: flex; align-items: center; }
-.consent-group input { margin-right: 10px; }
